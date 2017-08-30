@@ -20,82 +20,30 @@ import static org.apache.commons.io.FileUtils.readFileToString;
 public class SenseboxLocationEnricher implements org.apache.flink.api.common.functions.FlatMapFunction<java.util.Map<String, Object>, Map<String, Object>> {
     private static final Logger LOG = LoggerFactory.getLogger(SenseboxLocationEnricher.class);
 
-    class BoxMapEntry {
-        double latitude;
-        double longitude;
-        double altitude;
-        String osmId;
+    private static SenseboxLocationRegistryParser registryParser;
+    private static int senseboxRegistryMaxAge;
+    private static SenseboxLocationRegistry senseboxRegistry;
 
-        BoxMapEntry(double latitude, double longitude, double altitude, String osmId) {
-            this.latitude = latitude;
-            this.longitude = longitude;
-            this.altitude = altitude;
-            this.osmId = osmId;
-        }
+    public SenseboxLocationEnricher(String senseboxRegistryUrl, int senseboxRegistryMaxAge) {
+        this.senseboxRegistryMaxAge = senseboxRegistryMaxAge;
+        this.registryParser = new SenseboxLocationRegistryParser(senseboxRegistryUrl);
 
-        double getLatitude() { return this.latitude; }
-        double getLongitude() { return this.longitude; }
-        double getAltitude() { return this.altitude; }
-        String getOsmId() { return this.osmId; }
-    };
-
-    private static Map<String, BoxMapEntry> boxMap;
+        senseboxRegistry = registryParser.parseSenseboxRegistry();
+    }
 
     @Override
     public void flatMap(Map<String, Object> in, Collector<Map<String, Object>> out) throws Exception {
         //TODO: hier könnte man das Alter der boxMap prüfen und die regelmäßig regenerieren
-        //      solange die Daten aber aus einer JSON-Datei, die als Ressource mit im JAR liegt, kommen, lohnt das nicht
+        //TODO: dann entsprechend Timestamp lastRead hinzufügen und vergleichen
 
-        in.put("latitude", "Hallo Welt");
-        in.put("lonitude", "Hallo Welt");
-        in.put("altitude", "Hallo Welt");
-        in.put("openSenseMapID", "Hallo Welt");
-        out.collect(in);
-    }
+        if (senseboxRegistry.containsKey(in.get("boxId"))) {
+            SenseboxLocationRegistryEntry entry = senseboxRegistry.get(in.get("boxId"));
 
-    public static void main(String[] args) {
-        LOG.info("This is main!");
-
-        readBoxMap();
-    }
-
-    private static void readBoxMap() {
-        //TODO: wir könnten die per HTTP holen und die in ein Volume legen, von dem die Nginx serviert. Dann wäre das wenigsten so ähnlich wie live bearbeitbar
-        String jsonRaw;
-        JsObject json;
-
-        Map<String, BoxMapEntry> newBoxMap = new HashMap<String, BoxMapEntry>();
-
-        ObjectMapper mapper = new ObjectMapper();
-
-        try {
-            jsonRaw = readBoxMapFromResourceFile();
-
-            LOG.info(jsonRaw);
-
-            newBoxMap = mapper.readValue(jsonRaw, Map.class);
-/*
-            json = (JsObject)Json.parse(jsonRaw);
-
-            json.keys().foreach()
-                    //(key -> { JsObject obj = json.get(key); });
-
-            newBoxMap = new HashMap<>(json.keys().size());
-
-            //TODO: validieren und in den Entry packen und den in die Map
-
-            BoxMapEntry e = new BoxMapEntry();*/
-        } catch (IOException e) {
-            e.printStackTrace();
+            in.put("latitude", entry.getLatitude());
+            in.put("longitude", entry.getLongitude());
+            in.put("altitude", entry.getAltitude());
+            in.put("openSenseMapID", entry.getOpenSenseMapIDId());
         }
-
-        boxMap = newBoxMap;
-    }
-
-    private static String readBoxMapFromResourceFile() throws IOException {
-        ClassLoader classLoader = SenseboxLocationEnricher.class.getClassLoader();
-        File file = new File(classLoader.getResource("sensebox-registry.json").getFile());
-
-        return readFileToString(file, StandardCharsets.UTF_8);
+        out.collect(in);
     }
 }

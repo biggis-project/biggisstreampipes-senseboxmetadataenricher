@@ -16,6 +16,8 @@ public enum Config {
     private final static String KAFKA_PORT = "kafka_port";
     private final static String FLINK_HOST = "flink_host";
     private final static String FLINK_PORT = "flink_port";
+    private final static String SENSEBOX_REGISTRY_URL = "sensebox_registry_url";
+    private final static String SENSEBOX_REGISTRY_MAX_AGE = "sensebox_registry_max_age";
 
     public final static String serverUrl;
     public final static String iconBaseUrl;
@@ -30,6 +32,8 @@ public enum Config {
         config.register(KAFKA_PORT, 9092, "Port for kafka of the pe sinks project");
         config.register(FLINK_HOST, "flink", "Host for flink of the pe sinks project");
         config.register(FLINK_PORT, 9092, "Port for flink of the pe sinks project");
+        config.register(SENSEBOX_REGISTRY_URL, "http://ipe-koi09.fzi.de/static-data/sensebox-registry.json", "The URL where to sensebox-registry.json");
+        config.register(SENSEBOX_REGISTRY_MAX_AGE, 600, "Maximum age (in seconds) of cached sensebox registry data");
     }
 
     static {
@@ -60,6 +64,10 @@ public enum Config {
     public int getFlinkPort() {
         return config.getInteger(FLINK_PORT);
     }
+
+    public String getSenseboxRegistryUrl() { return config.getString(SENSEBOX_REGISTRY_URL); }
+
+    public int getSenseboxRegistryMaxAge() { return config.getInteger(SENSEBOX_REGISTRY_MAX_AGE); }
 
     public String getIconUrl(String icon) { return iconBaseUrl + "/" + icon; }
 }
