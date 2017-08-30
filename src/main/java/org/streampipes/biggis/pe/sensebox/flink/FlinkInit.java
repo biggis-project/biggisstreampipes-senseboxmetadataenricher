@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Created by lutz on 02.08.17.
+ * Created by Jochen Lutz on 2017-08-02.
  */
 public class FlinkInit extends StandaloneModelSubmitter {
     private static final Logger LOG = LoggerFactory.getLogger(FlinkInit.class);

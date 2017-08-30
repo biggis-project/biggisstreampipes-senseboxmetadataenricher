@@ -1,12 +1,9 @@
 package org.streampipes.biggis.pe.sensebox.flink.enrich.location;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import play.api.libs.json.JsObject;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Jochen Lutz on 2017-08-30.

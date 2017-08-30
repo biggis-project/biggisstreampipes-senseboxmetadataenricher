@@ -8,7 +8,7 @@ import org.apache.flink.streaming.api.datastream.DataStream;
 import java.util.Map;
 
 /**
- * Created by lutz on 02.08.17.
+ * Created by Jochen Lutz on 2017-08-02.
  */
 public class SenseboxLocationProgram extends FlinkSepaRuntime<SenseboxLocationParameters> {
     public SenseboxLocationProgram(SenseboxLocationParameters params, FlinkDeploymentConfig config) {

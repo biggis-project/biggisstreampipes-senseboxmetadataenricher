@@ -1,7 +1,6 @@
 package org.streampipes.biggis.pe.sensebox.flink.enrich.location;
 
 import org.streampipes.wrapper.flink.AbstractFlinkAgentDeclarer;
-import org.streampipes.wrapper.flink.FlinkDeploymentConfig;
 import org.streampipes.wrapper.flink.FlinkSepaRuntime;
 import org.streampipes.model.impl.EpaType;
 import org.streampipes.model.impl.graph.SepaDescription;

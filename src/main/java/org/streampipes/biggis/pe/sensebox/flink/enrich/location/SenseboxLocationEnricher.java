@@ -1,21 +1,12 @@
 package org.streampipes.biggis.pe.sensebox.flink.enrich.location;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.flink.util.Collector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import play.api.libs.json.*;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 import java.util.Map;
 
-import static org.apache.commons.io.FileUtils.readFileToString;
-
 /**
- * Created by lutz on 02.08.17.
+ * Created by Jochen Lutz on 2017-08-02.
  */
 public class SenseboxLocationEnricher implements org.apache.flink.api.common.functions.FlatMapFunction<java.util.Map<String, Object>, Map<String, Object>> {
     private static final Logger LOG = LoggerFactory.getLogger(SenseboxLocationEnricher.class);
