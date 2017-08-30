@@ -1,9 +1,8 @@
-package de.fzi.ipe.biggis.streampipes.flink;
+package org.streampipes.biggis.pe.sensebox.flink;
 
-import de.fzi.cep.sepa.client.init.DeclarersSingleton;
-import de.fzi.cep.sepa.client.standalone.init.StandaloneModelSubmitter;
-import de.fzi.ipe.biggis.streampipes.flink.enrich.location.SenseboxLocationController;
-import de.fzi.ipe.biggis.streampipes.flink.enrich.location.SenseboxLocationProgram;
+import org.streampipes.container.init.DeclarersSingleton;
+import org.streampipes.container.standalone.init.StandaloneModelSubmitter;
+import org.streampipes.biggis.pe.sensebox.flink.enrich.location.SenseboxLocationController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +20,8 @@ public class FlinkInit extends StandaloneModelSubmitter {
         DeclarersSingleton.getInstance()
                 .add(new SenseboxLocationController());
 
-        DeclarersSingleton.getInstance().setPort(8096);
+        DeclarersSingleton.getInstance().setHostName(Config.INSTANCE.getHost());
+        DeclarersSingleton.getInstance().setPort(Config.INSTANCE.getPort());
         new FlinkInit().init();
     }
 }

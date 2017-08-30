@@ -1,7 +1,7 @@
-package de.fzi.ipe.biggis.streampipes.flink.enrich.location;
+package org.streampipes.biggis.pe.sensebox.flink.enrich.location;
 
-import de.fzi.cep.sepa.model.impl.graph.SepaInvocation;
-import de.fzi.cep.sepa.runtime.param.BindingParameters;
+import org.streampipes.model.impl.graph.SepaInvocation;
+import org.streampipes.wrapper.BindingParameters;
 
 /**
  * Created by Jochen Lutz on 2017-08-02.

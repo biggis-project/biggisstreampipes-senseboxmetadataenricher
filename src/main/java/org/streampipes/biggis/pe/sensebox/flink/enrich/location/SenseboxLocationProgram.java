@@ -1,7 +1,7 @@
-package de.fzi.ipe.biggis.streampipes.flink.enrich.location;
+package org.streampipes.biggis.pe.sensebox.flink.enrich.location;
 
-import de.fzi.cep.sepa.flink.FlinkDeploymentConfig;
-import de.fzi.cep.sepa.flink.FlinkSepaRuntime;
+import org.streampipes.wrapper.flink.FlinkDeploymentConfig;
+import org.streampipes.wrapper.flink.FlinkSepaRuntime;
 import org.apache.flink.streaming.api.datastream.DataStream;
 
 import java.util.Map;

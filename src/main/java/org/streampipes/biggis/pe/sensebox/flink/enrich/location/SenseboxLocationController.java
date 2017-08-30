@@ -1,16 +1,16 @@
-package de.fzi.ipe.biggis.streampipes.flink.enrich.location;
+package org.streampipes.biggis.pe.sensebox.flink.enrich.location;
 
-import de.fzi.cep.sepa.flink.AbstractFlinkAgentDeclarer;
-import de.fzi.cep.sepa.flink.FlinkDeploymentConfig;
-import de.fzi.cep.sepa.flink.FlinkSepaRuntime;
-import de.fzi.cep.sepa.model.impl.EpaType;
-import de.fzi.cep.sepa.model.impl.graph.SepaDescription;
-import de.fzi.cep.sepa.model.impl.graph.SepaInvocation;
-import de.fzi.cep.sepa.model.vocabulary.SO;
-import de.fzi.cep.sepa.sdk.builder.ProcessingElementBuilder;
-import de.fzi.cep.sepa.sdk.extractor.ProcessingElementParameterExtractor;
-import de.fzi.cep.sepa.sdk.helpers.*;
-import de.fzi.ipe.biggis.streampipes.flink.Config;
+import org.streampipes.wrapper.flink.AbstractFlinkAgentDeclarer;
+import org.streampipes.wrapper.flink.FlinkDeploymentConfig;
+import org.streampipes.wrapper.flink.FlinkSepaRuntime;
+import org.streampipes.model.impl.EpaType;
+import org.streampipes.model.impl.graph.SepaDescription;
+import org.streampipes.model.impl.graph.SepaInvocation;
+import org.streampipes.model.vocabulary.SO;
+import org.streampipes.sdk.builder.ProcessingElementBuilder;
+import org.streampipes.sdk.extractor.ProcessingElementParameterExtractor;
+import org.streampipes.sdk.helpers.*;
+import org.streampipes.biggis.pe.sensebox.flink.Config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +28,7 @@ public class SenseboxLocationController extends AbstractFlinkAgentDeclarer<Sense
                 "Appends the location and the OpenSenseMap ID of SenseBoxes " +
                         "from the external SenseBox Metadata Store")
                 .category(EpaType.ENRICH)
-                .iconUrl(Config.getIconUrl("enrich-timestamp-icon"))
+                .iconUrl(Config.INSTANCE.getIconUrl("enrich-timestamp-icon"))
                 .requiredPropertyStream1(EpRequirements.anyProperty())//TODO
                 .outputStrategy(OutputStrategies.append(
                         EpProperties.doubleEp("latitude", SO.Latitude),
@@ -44,7 +44,7 @@ public class SenseboxLocationController extends AbstractFlinkAgentDeclarer<Sense
 
     @Override
     protected FlinkSepaRuntime<SenseboxLocationParameters> getRuntime(SepaInvocation graph) {
-        LOG.warn("Jar: " + Config.JAR_FILE + ", Flink: " + Config.FLINK_HOST + ":" + Config.FLINK_PORT);
+        LOG.warn("Jar: " + Config.JAR_FILE + ", Flink: " + Config.INSTANCE.getFlinkHost() + ":" + Config.INSTANCE.getFlinkPort());
 
         ProcessingElementParameterExtractor extractor = ProcessingElementParameterExtractor.from(graph);
 

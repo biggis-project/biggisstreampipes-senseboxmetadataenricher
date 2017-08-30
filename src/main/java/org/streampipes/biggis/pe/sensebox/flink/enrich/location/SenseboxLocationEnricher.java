@@ -1,4 +1,4 @@
-package de.fzi.ipe.biggis.streampipes.flink.enrich.location;
+package org.streampipes.biggis.pe.sensebox.flink.enrich.location;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.flink.util.Collector;
@@ -9,10 +9,8 @@ import play.api.libs.json.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import static org.apache.commons.io.FileUtils.readFileToString;
 
