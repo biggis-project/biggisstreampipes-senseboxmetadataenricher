@@ -1,5 +1,6 @@
 package org.streampipes.biggis.pe.sensebox.flink.enrich.location;
 
+import org.streampipes.model.vocabulary.Geo;
 import org.streampipes.wrapper.flink.AbstractFlinkAgentDeclarer;
 import org.streampipes.wrapper.flink.FlinkSepaRuntime;
 import org.streampipes.model.impl.EpaType;
@@ -30,9 +31,9 @@ public class SenseboxLocationController extends AbstractFlinkAgentDeclarer<Sense
                 .iconUrl(Config.INSTANCE.getIconUrl("enrich-timestamp-icon"))
                 .requiredPropertyStream1(EpRequirements.anyProperty())//TODO
                 .outputStrategy(OutputStrategies.append(
-                        EpProperties.doubleEp("latitude", SO.Latitude),
-                        EpProperties.doubleEp("longitude", SO.Longitude),
-                        EpProperties.doubleEp("altitude", SO.Elevation),
+                        EpProperties.doubleEp("latitude", Geo.lat),
+                        EpProperties.doubleEp("longitude", Geo.lng),
+                        EpProperties.doubleEp("altitude", Geo.alt),
                         EpProperties.stringEp("openSenseMapID", SO.ServiceUrl) //TODO: gibt's was besseres?
                         )
                 )
