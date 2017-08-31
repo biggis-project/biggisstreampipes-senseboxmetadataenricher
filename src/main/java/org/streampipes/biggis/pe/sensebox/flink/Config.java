@@ -26,7 +26,7 @@ public enum Config {
 
     Config() {
         config = SpConfig.getSpConfig("pe/org.streampipes.biggis.pe.sensebox.flink");
-        config.register(HOST, "sensebox-flink", "Hostname for the sensebox flink pe integration");
+        config.register(HOST, "sensebox-metadata-enricher", "Hostname for the sensebox flink pe integration");
         config.register(PORT, 8090, "Port for the sensebox flink pe integration");
         config.register(KAFKA_HOST, "kafka", "Host for kafka of the pe sinks project");
         config.register(KAFKA_PORT, 9092, "Port for kafka of the pe sinks project");
