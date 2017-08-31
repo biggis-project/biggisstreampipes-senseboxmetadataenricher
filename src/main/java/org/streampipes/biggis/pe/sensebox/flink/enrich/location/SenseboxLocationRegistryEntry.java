@@ -3,7 +3,7 @@ package org.streampipes.biggis.pe.sensebox.flink.enrich.location;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Created by lutz on 30.08.17.
+ * Created by Jochen Lutz on 2017-08-30.
  */
 public class SenseboxLocationRegistryEntry {
     double latitude;

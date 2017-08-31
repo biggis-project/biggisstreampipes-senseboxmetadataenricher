@@ -12,20 +12,24 @@ public class SenseboxLocationEnricher implements org.apache.flink.api.common.fun
     private static final Logger LOG = LoggerFactory.getLogger(SenseboxLocationEnricher.class);
 
     private static SenseboxLocationRegistryParser registryParser;
-    private static int senseboxRegistryMaxAge;
+    private static long senseboxRegistryMaxAge;
+    private static long senseboxRegistryLastFetched = 0;
     private static SenseboxLocationRegistry senseboxRegistry;
 
     public SenseboxLocationEnricher(String senseboxRegistryUrl, int senseboxRegistryMaxAge) {
-        this.senseboxRegistryMaxAge = senseboxRegistryMaxAge;
+        this.senseboxRegistryMaxAge = senseboxRegistryMaxAge * 1000;
         this.registryParser = new SenseboxLocationRegistryParser(senseboxRegistryUrl);
 
         senseboxRegistry = registryParser.parseSenseboxRegistry();
+        senseboxRegistryLastFetched = System.currentTimeMillis();
     }
 
     @Override
     public void flatMap(Map<String, Object> in, Collector<Map<String, Object>> out) throws Exception {
-        //TODO: hier könnte man das Alter der boxMap prüfen und die regelmäßig regenerieren
-        //TODO: dann entsprechend Timestamp lastRead hinzufügen und vergleichen
+        if (System.currentTimeMillis() > senseboxRegistryLastFetched + senseboxRegistryMaxAge) {
+            senseboxRegistry = registryParser.parseSenseboxRegistry();
+            senseboxRegistryLastFetched = System.currentTimeMillis();
+        }
 
         if (senseboxRegistry.containsKey(in.get("boxId"))) {
             SenseboxLocationRegistryEntry entry = senseboxRegistry.get(in.get("boxId"));
