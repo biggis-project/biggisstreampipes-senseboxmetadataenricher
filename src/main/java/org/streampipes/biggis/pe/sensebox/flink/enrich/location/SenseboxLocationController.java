@@ -2,6 +2,7 @@ package org.streampipes.biggis.pe.sensebox.flink.enrich.location;
 
 import org.streampipes.model.vocabulary.Geo;
 import org.streampipes.wrapper.flink.AbstractFlinkAgentDeclarer;
+import org.streampipes.wrapper.flink.FlinkDeploymentConfig;
 import org.streampipes.wrapper.flink.FlinkSepaRuntime;
 import org.streampipes.model.impl.EpaType;
 import org.streampipes.model.impl.graph.SepaDescription;
@@ -53,7 +54,7 @@ public class SenseboxLocationController extends AbstractFlinkAgentDeclarer<Sense
         );
 
         /* ohne FlinkDeploymentConfig() wird das im Local Mode gestartet */
-        return new SenseboxLocationProgram(staticParam);
-        //return new SenseboxLocationProgram(staticParam, new FlinkDeploymentConfig(Config.JAR_FILE, Config.FLINK_HOST, Config.FLINK_PORT));
+        //return new SenseboxLocationProgram(staticParam);
+        return new SenseboxLocationProgram(staticParam, new FlinkDeploymentConfig(Config.JAR_FILE, Config.INSTANCE.getFlinkHost(), Config.INSTANCE.getFlinkPort()));
     }
 }
