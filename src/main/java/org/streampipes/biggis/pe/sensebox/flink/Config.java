@@ -31,7 +31,7 @@ public enum Config {
         config.register(KAFKA_HOST, "kafka", "Host for kafka of the pe sinks project");
         config.register(KAFKA_PORT, 9092, "Port for kafka of the pe sinks project");
         config.register(FLINK_HOST, "flink", "Host for flink of the pe sinks project");
-        config.register(FLINK_PORT, 9092, "Port for flink of the pe sinks project");
+        config.register(FLINK_PORT, 6123, "Port for flink of the pe sinks project");
         config.register(SENSEBOX_REGISTRY_URL, "http://ipe-koi09.fzi.de/static-data/sensebox-registry.json", "The URL where to sensebox-registry.json");
         config.register(SENSEBOX_REGISTRY_MAX_AGE, 600, "Maximum age (in seconds) of cached sensebox registry data");
     }
